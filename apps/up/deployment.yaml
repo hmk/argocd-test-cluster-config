@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: up
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: up
+  template:
+    metadata:
+      labels:
+        app: up
+    spec:
+      containers:
+        - name: ruby
+          image: ruby:3.3-slim
+          ports:
+            - containerPort: 4567
+          command: ["bash", "-c"]
+          args:
+            - |
+              gem install sinatra --no-document
+              cat <<'EOF' > app.rb
+              require 'sinatra'
+
+              get '/' do
+                "✅ We are up and running!"
+              end
+              EOF
+              ruby app.rb -o 0.0.0.0 -p 4567

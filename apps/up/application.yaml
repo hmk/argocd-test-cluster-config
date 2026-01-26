@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: up
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/hmk/argocd-test-cluster-config.git
+    targetRevision: main
+    path: apps/up
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: up
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
