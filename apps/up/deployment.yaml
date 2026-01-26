@@ -20,7 +20,7 @@ spec:
           command: ["bash", "-c"]
           args:
             - |
-              gem install sinatra --no-document
+              gem install sinatra rackup puma --no-document
               cat <<'EOF' > app.rb
               require 'sinatra'
 
