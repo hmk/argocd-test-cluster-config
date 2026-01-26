@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: ruby
-          image: ruby:3.3-slim
+          image: ruby:3.3
           ports:
             - containerPort: 4567
           command: ["bash", "-c"]
