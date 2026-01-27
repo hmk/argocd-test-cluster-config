@@ -15,11 +15,16 @@ spec:
           type: ClusterIP
         ingress:
           enabled: true
+          className: tailscale
           hosts:
             - host: headlamp
               paths:
                 - path: /
                   type: Prefix
+          tls:
+            - hosts:
+                - headlamp
+              secretName: headlamp-tls
         config:
           anonymousAccess:
             enable: false
