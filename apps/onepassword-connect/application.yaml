@@ -20,11 +20,13 @@ spec:
         operator:
           create: true
           replicaCount: 1
-          # Token will be created separately via kubectl or external process
-          # token:
-          #   name: onepassword-token
-          #   key: token
+          token:
+            name: onepassword-token
+            key: token
         connect:
+          token:
+            name: onepassword-token
+            key: token
           service:
             type: ClusterIP
 

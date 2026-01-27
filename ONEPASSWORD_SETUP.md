@@ -9,17 +9,32 @@ Before deploying the 1Password Connect server, you need to set up the credential
    - Go to 1Password.com > Settings > Business > Workflow > Secrets Automation
    - Click "Create Connect Server"
    - Give it a name like "k3s-cluster"
-   - Download the credentials file (contains the token)
+   - Download the credentials file (`1password-credentials.json`)
 
-2. Create the Kubernetes secret in your cluster:
+2. Save the credentials file to `.env` (for repeatability):
    ```bash
-   # Create the namespace first
-   kubectl create namespace onepassword
+   # Copy the credentials file to .env for local reference
+   cp /path/to/1password-credentials.json .env/1password-credentials.json
 
-   # Create the secret from the downloaded credentials file
+   # Make sure .env is in .gitignore (it should be!)
+   echo ".env/" >> .gitignore
+   ```
+
+3. Create the Kubernetes secret from the credentials file:
+   ```bash
+   # The namespace will be auto-created by ArgoCD due to CreateNamespace=true
    kubectl create secret generic op-credentials \
-     --from-file=1password-credentials.json=/path/to/downloaded/credentials.json \
+     --from-file=1password-credentials.json=.env/1password-credentials.json \
      --namespace onepassword
+   ```
+
+   Or using base64 (alternative method):
+   ```bash
+   # Base64 encode the credentials file
+   base64 -i .env/1password-credentials.json
+
+   # Then create a secret manifest (don't commit this!)
+   # Or apply directly with kubectl create secret generic
    ```
 
 ## Step 2: Verify Deployment
