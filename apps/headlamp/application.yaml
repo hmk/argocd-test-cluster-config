@@ -15,7 +15,7 @@ spec:
           type: ClusterIP
         ingress:
           enabled: true
-          className: tailscale
+          ingressClassName: tailscale
           hosts:
             - host: headlamp
               paths:
