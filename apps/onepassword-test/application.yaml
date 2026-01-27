@@ -3,6 +3,9 @@ kind: Application
 metadata:
   name: onepassword-test
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-options: Skip
+
 spec:
   project: default
 
