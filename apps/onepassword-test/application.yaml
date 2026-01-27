@@ -4,7 +4,7 @@ metadata:
   name: onepassword-test
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-options: Skip
+    argocd.argoproj.io/sync-wave: "50"
 
 spec:
   project: default
