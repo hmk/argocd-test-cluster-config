@@ -6,23 +6,23 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://headlamp-k8s.github.io/headlamp/
+    repoURL: https://kubernetes-sigs.github.io/headlamp/
     targetRevision: 0.27.0
     chart: headlamp
     helm:
-      parameters:
-        - name: service.type
-          value: ClusterIP
-        - name: ingress.enabled
-          value: "true"
-        - name: ingress.hosts[0].host
-          value: headlamp
-        - name: ingress.hosts[0].paths[0].path
-          value: /
-        - name: ingress.hosts[0].paths[0].pathType
-          value: Prefix
-        - name: config.anonymousAccess.enable
-          value: "false"
+      values: |
+        service:
+          type: ClusterIP
+        ingress:
+          enabled: true
+          hosts:
+            - host: headlamp
+              paths:
+                - path: /
+                  pathType: Prefix
+        config:
+          anonymousAccess:
+            enable: false
   destination:
     server: https://kubernetes.default.svc
     namespace: headlamp
