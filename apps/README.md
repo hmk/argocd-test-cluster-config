@@ -44,16 +44,22 @@ The `tailscale-oauth` OnePasswordItem will automatically create a Kubernetes Sec
 
 ### 3. Verify Tailscale Authentication
 
-After deployment, you'll need to authenticate the Tailscale operator:
+After deployment, verify that the OAuth credentials were properly loaded:
 
-1. Get the operator's auth URL:
-   ```bash
-   kubectl -n tailscale get secret/operator-authurl -o go-template='{{index .data "authurl"}}' | base64 -d
-   ```
+```bash
+# Check if the operator-oauth secret was created
+kubectl -n tailscale get secret operator-oauth
 
-2. Visit the URL to authenticate the operator with your Tailscale account.
+# Check the operator logs for any authentication errors
+kubectl -n tailscale logs deployment/tailscale-operator
+```
 
-### 3. Access Headlamp
+If the operator is running successfully with OAuth credentials, it should authenticate automatically. If you see auth errors, verify:
+1. The `tailscale-credentials` item in 1Password has the correct `client_id` and `client_secret` fields
+2. The 1Password operator is functioning correctly
+3. The `tailscale-oauth` OnePasswordItem is synced in Argo CD
+
+### 4. Access Headlamp
 
 Once both applications are running and Tailscale is configured:
 
@@ -81,3 +87,30 @@ If you're having issues:
    ```bash
    kubectl -n headlamp describe ingress headlamp-tailscale-ingress
    ```
+
+### OAuth Troubleshooting
+
+If the Tailscale operator fails to authenticate or shows OAuth errors:
+
+1. **Check if the secret was created:**
+   ```bash
+   kubectl -n tailscale get secret operator-oauth
+   kubectl -n tailscale describe secret operator-oauth
+   ```
+   The secret should contain `client_id` and `client_secret` keys.
+
+2. **Verify 1Password item fields:**
+   Ensure the `tailscale-credentials` item in 1Password has exactly:
+   - A field named `client_id` with your Tailscale OAuth client ID
+   - A field named `client_secret` with your Tailscale OAuth client secret
+
+3. **Check 1Password operator logs:**
+   ```bash
+   kubectl -n onepassword logs deployment/onepassword-connect-operator
+   ```
+
+4. **Check Tailscale operator logs:**
+   ```bash
+   kubectl -n tailscale logs deployment/tailscale-operator
+   ```
+   Look for OAuth-related error messages.
