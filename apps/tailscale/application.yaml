@@ -13,6 +13,7 @@ spec:
       parameters:
         - name: apiServerProxyConfig.mode
           value: "true"
+          forceString: true
         - name: logs.enable
           value: "true"
   destination:
