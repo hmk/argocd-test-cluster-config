@@ -1,2 +1,4 @@
 resources:
   - up/application.yaml
+  - onepassword-connect/application.yaml
+  - onepassword-test/application.yaml

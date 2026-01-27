@@ -1,0 +1,40 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: onepassword-connect
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://1password.github.io/connect-helm-charts
+    targetRevision: 2.2.1
+    chart: connect
+    helm:
+      parameters:
+        - name: operator.create
+          value: "true"
+        - name: connect.service.type
+          value: ClusterIP
+      values: |
+        operator:
+          create: true
+          replicaCount: 1
+          # Token will be created separately via kubectl or external process
+          # token:
+          #   name: onepassword-token
+          #   key: token
+        connect:
+          service:
+            type: ClusterIP
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: onepassword
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
