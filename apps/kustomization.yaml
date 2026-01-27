@@ -2,5 +2,6 @@ resources:
   - up/application.yaml
   - onepassword-connect/application.yaml
   - onepassword-test/application.yaml
+  - tailscale-oauth/onepassworditem.yaml
   - tailscale/application.yaml
   - headlamp/application.yaml

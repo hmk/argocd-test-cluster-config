@@ -9,11 +9,40 @@ This directory contains the Argo CD applications for Tailscale and Headlamp, whi
 
 ## Setup Instructions
 
-### 1. Apply the Applications
+### 1. Create Tailscale OAuth Credentials in 1Password
+
+Before deploying, you need to set up Tailscale OAuth credentials:
+
+1. **Create an OAuth client in Tailscale:**
+   - Go to [Tailscale Admin Console > Settings > OAuth Clients](https://login.tailscale.com/admin/settings/oauth)
+   - Click "Generate OAuth Client"
+   - Set the following scopes:
+     - `devices:core` (read/write)
+     - `auth_keys` (write)
+     - `services` (write)
+   - Set the tag: `tag:k8s-operator`
+   - Click "Generate client"
+   - Copy the **Client ID** and **Client Secret** (you won't be able to see the secret again!)
+
+2. **Update the 1Password item:**
+   - Open the `tailscale-credentials` item in the `ArgoCDTest` vault in 1Password
+   - Add two fields:
+     - Field name: `client_id` → Value: (paste the Client ID from Tailscale)
+     - Field name: `client_secret` → Value: (paste the Client Secret from Tailscale)
+   - Save the item
+
+3. **Verify the 1Password Operator is running:**
+   ```bash
+   kubectl -n onepassword get pods
+   ```
+
+### 2. Apply the Applications
 
 The applications will be automatically deployed by Argo CD since they're included in the main kustomization.yaml.
 
-### 2. Configure Tailscale
+The `tailscale-oauth` OnePasswordItem will automatically create a Kubernetes Secret named `operator-oauth` in the `tailscale` namespace, which the Tailscale operator will use for authentication.
+
+### 3. Verify Tailscale Authentication
 
 After deployment, you'll need to authenticate the Tailscale operator:
 
