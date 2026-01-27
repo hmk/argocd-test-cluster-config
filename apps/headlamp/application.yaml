@@ -15,11 +15,11 @@ spec:
           type: ClusterIP
         ingress:
           enabled: true
+          pathType: Prefix
           hosts:
             - host: headlamp
               paths:
                 - path: /
-                  pathType: Prefix
         config:
           anonymousAccess:
             enable: false
