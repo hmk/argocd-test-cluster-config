@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cm
+  namespace: argocd
+data:
+  application.instanceLabelKey: argocd.argoproj.io/instance
+  dex.config: |
+    connectors:
+      - type: google
+        id: google
+        name: Google
+        config:
+          issuer: https://accounts.google.com
+          clientID: $dex.google.clientID
+          clientSecret: $dex.google.clientSecret
+          redirectURI: https://argocd.tail9402f.ts.net/api/dex/callback
+          hostedDomains:
+            - heimark.org
+  url: https://argocd.tail9402f.ts.net
