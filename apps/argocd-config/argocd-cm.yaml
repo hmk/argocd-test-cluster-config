@@ -5,6 +5,8 @@ metadata:
   namespace: argocd
 data:
   application.instanceLabelKey: argocd.argoproj.io/instance
+  # NOTE: Google OAuth credentials will be injected by dex-secret-injector Job
+  # The placeholders below will be replaced with real values from OnePassword
   dex.config: |
     connectors:
       - type: google
@@ -12,8 +14,8 @@ data:
         name: Google
         config:
           issuer: https://accounts.google.com
-          clientID: $dex.google.clientID
-          clientSecret: $dex.google.clientSecret
+          clientID: $dex.google.clientID  # PLACEHOLDER - will be replaced
+          clientSecret: $dex.google.clientSecret  # PLACEHOLDER - will be replaced
           redirectURI: https://argocd.tail9402f.ts.net/api/dex/callback
           hostedDomains:
             - heimark.org

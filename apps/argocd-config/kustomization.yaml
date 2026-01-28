@@ -2,3 +2,5 @@ resources:
   - google-oauth-secret.yaml
   - argocd-cm.yaml
   - argocd-rbac-cm.yaml
+  - dex-secret-injector-rbac.yaml
+  - dex-secret-injector-job.yaml
