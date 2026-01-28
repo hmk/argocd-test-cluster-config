@@ -8,3 +8,4 @@ resources:
   - tailscale/application.yaml
   - headlamp/application.yaml
   - argocd-tailscale-route/application.yaml
+  - argocd-config/application.yaml
