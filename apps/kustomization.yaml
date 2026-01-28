@@ -7,3 +7,4 @@ resources:
   - tailscale-oauth/application.yaml
   - tailscale/application.yaml
   - headlamp/application.yaml
+  - argocd-tailscale-route/application.yaml
