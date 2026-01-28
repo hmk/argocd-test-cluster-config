@@ -3,7 +3,7 @@ kind: Application
 metadata:
   name: onepassword-connect
   annotations:
-    argocd.argoproj.io/sync-wave: "0"
+    argocd.argoproj.io/sync-wave: "-1"
   namespace: argocd
 spec:
   project: default

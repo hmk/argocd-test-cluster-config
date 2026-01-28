@@ -1,8 +1,8 @@
 resources:
   - root-application.yaml
-  - wait-for-onepassword-crd.yaml
   - up/application.yaml
   - onepassword-connect/application.yaml
+  - wait-for-onepassword-crd.yaml
   - onepassword-test/application.yaml
   - tailscale-oauth/application.yaml
   - tailscale/application.yaml
